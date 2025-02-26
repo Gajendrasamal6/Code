@@ -1,0 +1,61 @@
+oracle creds source|^|oracle creds targets|^| source url|^|target url|^|source_table|^|target_table|^|count source|^|count target|^|status |^|start time|^| last run
+user1,pass1|^|user_tar1,pass_tar1|^|192.0.10.11|^|182.90.22.31|^|table1|^|tar_table1|^|100|^|100|^|matched|^|11':'40 PM|^|11':'55 PM 24 - 2 -2025
+user2,pass2|^|user_tar2,pass_tar2|^|193.0.10.11|^|182.90.22.31|^|table2|^|tar_table2|^|100|^|99|^|Not matched|^|11':'40 PM|^|11':'55 PM 24 - 2 -2025
+
+
+1:select count(*) from '{source_table}' where '{col1}' >= to_date('{date1}',YYYY-MM-DD)
+
+2:select count(*) from '{source_table}' where '{col1}' >= to_date('{date1}',DD-MM-YYYY) and '{col2}' <= to_date('{date1}',DD-MM-YYYY)
+
+[
+    {
+        "id": "1",
+        "source_table": "orders",
+        "target_table": "orders_archive",
+        "source_col_list_for_where_condition": "order_date,2024-02-20"
+    },
+    {
+        "id": "2",
+        "source_table": "customers",
+        "target_table": "customers_archive",
+        "source_col_list_for_where_condition": "signup_date,2023-12-01|last_purchase_date,2024-02-15"
+    }
+]
+
+[
+{ 
+ 'id':'1',
+ 'source_host':'192.0.10.11'
+ 'source_port':'1521'
+ 'source_username':'user1'
+ 'source_password':'pass1'
+ 'source_service':'ORCL'
+ 'source_table':'table1'
+ 'source_col_list_for_where_condition':'load_dts,2025-02-23'
+ 'target_host':'182.90.22.31'
+ 'target_port':'1521'
+ 'target_username':'user_tar1'
+ 'target_password':'pass_tar1'
+ 'target_service':'ORCL'
+ 'target_table':'tar_table1'
+ 'target_col_list_for_where_condition':'load_dts,2025-02-25'
+},
+{ 
+ 'id':'2',
+ 'source_host':'193.0.10.11'
+ 'source_port':'1521'
+ 'source_username':'user2'
+ 'source_password':'pass2'
+ 'source_service':'ORCL'
+ 'source_table':'table1'
+ 'source_col_list_for_where_condition':'load_dts,20-02-2025|activate_date,23-02-2024'
+ 'target_host':'182.90.22.31'
+ 'target_port':'1521'
+ 'target_username':'user_tar1'
+ 'target_password':'pass_tar1'
+ 'target_service':'ORCL'
+ 'target_table':'tar_table1'
+ 'target_col_list_for_where_condition':'load_dts,20-02-2025|activate_date,23-02-2024'
+}
+]
+ 
